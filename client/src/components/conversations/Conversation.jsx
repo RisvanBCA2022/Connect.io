@@ -1,11 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './conversation.css'
+import { axiosInstance } from '../../axiosInstance'
 
-const Conversation = () => {
+const Conversation = ({Conversation,currentuser}) => {
+  const [user,setuser]=useState(null)
+  const PF =import.meta.env.VITE_REACT_APP_PUBLIC_FOLDER;
+
+  useEffect(()=>{
+    const friendId = Conversation.member.find(m=>m!==currentuser._id)
+    const getUser =async ()=>{
+      try {
+        const res = await axiosInstance("/users?userId="+friendId)    
+        setuser(res.data)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getUser()
+  },[currentuser,Conversation])
   return (
     <div className='conversation'>
-        <img src="https://imgs.search.brave.com/6IT59uEkaIRef7x2PVhd8-if-e32GFsN1tGuZgZAuFU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly92YXJp/ZXR5LmNvbS93cC1j/b250ZW50L3VwbG9h/ZHMvMjAyMy8xMS9T/Y3JlZW4tU2hvdC0y/MDIzLTExLTA5LWF0/LTUuMDYuMTItUE0u/cG5nP3c9MTAwMCZo/PTU2MyZjcm9wPTE" alt="" className='conversationImg' />
-        <span className='coversationName'>John Doe</span>
+        <img src={user?.profilePicture?user.profilePicture:PF+"person/noAvatar.png"} alt="" className='conversationImg' />
+        <span className='coversationName'>{user?.username}</span>
       
     </div>
   )
