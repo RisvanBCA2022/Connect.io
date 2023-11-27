@@ -2,7 +2,7 @@ import { useContext, useRef } from "react";
 import "./login.css";
 import { loginCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
-import { CircularProgress } from "@mui/material";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Login() {
   const email = useRef();
@@ -23,7 +23,7 @@ export default function Login() {
         <div className="loginLeft">
           <h3 className="loginLogo">Connect.io</h3>
           <span className="loginDesc">
-            Connect with friends and the world around you on Lamasocial.
+            Connect with friends and the world around you on connect.io.
           </span>
         </div>
         <div className="loginRight">
